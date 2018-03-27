@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, Image, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import ImagePicker from 'react-native-image-picker';
+import RNFetchBlob from 'react-native-fetch-blob';
 import { Header } from '../common';
 
 const options = {
@@ -28,11 +29,12 @@ export default class UploadImage extends Component {
   constructor() {
       super();
       this.state = {
-        imageSource: null
+        imageSource: null,
+        data: null
       };
   }
 
-
+//A method to select photo in the GUI using React-Native-Image-Picker
 selectPhoto() {
   ImagePicker.showImagePicker(options, (response) => {
   console.log('Response = ', response);
@@ -42,21 +44,35 @@ selectPhoto() {
   }
   else if (response.error) {
     console.log('ImagePicker Error: ', response.error);
-  }
-  else if (response.customButton) {
-    console.log('User tapped custom button: ', response.customButton);
-  }
-  else {
+  } else {
     let source = { uri: response.uri };
 
     // You can also display the image using data:
     // let source = { uri: 'data:image/jpeg;base64,' + response.data };
 
     this.setState({
-      imageSource: source
+      imageSource: source,
+      data: response.data
     });
   }
 });
+}
+
+
+// A method to upload image to the server using React-Native-Fetch-Blob
+uploadPhoto() {
+  RNFetchBlob.fetch('POST', 'http://192.168.1.102:8000/api/v1/reader/', {
+    Authorization: 'Bearer access-token',
+    otherHeader: 'foo',
+    'Content-Type': 'multipart/form-data',
+  }, [
+    { name: 'image', filename: 'image.png', type: 'image/png', data: this.state.data },
+  ]).then((response) => response.json())
+  .then((response) => {
+    console.log(response);
+  }).catch((err) => {
+    console.error(err);
+  })
 }
 
 
@@ -90,9 +106,9 @@ render() {
 
 
         <TouchableOpacity
-         style={styles.buttonStyle}
-         onPress={() => this.props.navigation.navigate('DrawerOpen')
-       }>
+         style={styles.buttonStyle} onPress={this.uploadPhoto.bind(this)}
+        >
+
           <Text style={styles.btnTextStyle}> Process Image</Text>
         </TouchableOpacity>
 
