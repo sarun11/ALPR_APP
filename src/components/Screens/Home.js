@@ -94,17 +94,18 @@ const styles = StyleSheet.create({
   btnTextStyle: {
     alignSelf: 'center',
     color: '#fff',
-    fontSize: 30,
+    fontSize: 35,
     fontWeight: '600',
   },
   buttonStyle: {
       alignSelf: 'center',
-    backgroundColor: '#27AAE1',
-    borderRadius: 5,
-    borderWidth: 2,
-    borderColor: 'red',
+      backgroundColor: '#330066',
+      borderRadius: 20,
+      borderWidth: 5,
+      borderColor: '#27AAE1',
     marginTop: 100,
     width: 250,
+    height: 65
 
   },
   disclaimerStyle: {

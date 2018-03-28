@@ -1,8 +1,7 @@
-import React from 'react';
 import { DrawerNavigator } from 'react-navigation';
 import Home from './components/Screens/Home';
 import UploadImage from './components/Screens/UploadImage';
-import QueryDatabase from './components/Screens/QueryDatabase';
+import aboutProject from './components/Screens/About_project';
 
 
 const Router = DrawerNavigator(
@@ -13,8 +12,8 @@ const Router = DrawerNavigator(
     Upload_Image: {
       screen: UploadImage,
     },
-    Search: {
-      screen: QueryDatabase,
+    About: {
+      screen: aboutProject,
     },
   },
   {
