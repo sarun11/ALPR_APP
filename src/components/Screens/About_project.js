@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-export default class QueryDatabase extends Component {
+export default class aboutProject extends Component {
   static navigationOptions = {
     Label: 'Screen 3',
     drawerIcon: ({ tintColor }) => {
